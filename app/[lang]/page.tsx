@@ -14,17 +14,34 @@ import {
   Check,
   Clock,
   Hand,
+  Info,
   Instagram,
+  Layers,
+  Leather,
   Mail,
   Phone,
   Pin,
+  Seat,
   Sliders,
+  Sparkles,
+  Stain,
+  Vacuum,
   WhatsApp,
 } from "@/components/icons";
-import { brands, images, isLocale, site, stats, waLink, type Locale } from "@/content/site";
+import { brands, images, isLocale, services, site, stats, waLink, type Locale, type ServiceIcon, type ServiceKey } from "@/content/site";
 import { dictionaries, type Dict } from "@/content/translations";
 
 const delay = (ms: number) => ({ "--d": `${ms}ms` }) as CSSProperties;
+
+const priceOf = (key: ServiceKey) => services.find((s) => s.key === key)?.price ?? 0;
+const serviceIcons: Record<ServiceIcon, typeof Seat> = {
+  seat: Seat,
+  sparkles: Sparkles,
+  vacuum: Vacuum,
+  leather: Leather,
+  layers: Layers,
+  stain: Stain,
+};
 
 /** Wordmark styles so the placeholder brand strip reads like a row of logos. */
 const brandStyles = [
@@ -52,7 +69,7 @@ export default async function Page({ params }: PageProps<"/[lang]">) {
         <Shine t={t} book={book} />
         <Alternating t={t} />
         <BeforeAfterSection t={t} />
-        <Packages t={t} />
+        <PriceList t={t} />
         <Bento t={t} />
         <section aria-label={t.reviews.label} className="wrap mt-24 md:mt-32" data-reveal>
           <Reviews t={t.reviews} photo={images.review} photoAlt={t.alt.review} />
@@ -107,7 +124,7 @@ function Hero({ t, book }: { t: Dict; book: string }) {
             <div aria-hidden className="absolute inset-0 -z-10 bg-white/60 backdrop-blur-md" />
 
             <p className="label text-ink/60" data-reveal>
-              {site.city}, Estonia
+              {t.hero.label}
             </p>
             <h1
               className="heading mt-6 max-w-[11ch] text-[clamp(46px,6.2vw,96px)]"
@@ -254,7 +271,7 @@ function Services({ t }: { t: Dict }) {
             >
               <div className="relative aspect-[4/5] overflow-hidden bg-graphite sm:aspect-[4/3]">
                 <Image
-                  src={images.services[s.key as keyof typeof images.services]}
+                  src={images.services[s.key]}
                   alt={s.title}
                   fill
                   sizes="(min-width: 1024px) 25vw, 50vw"
@@ -264,16 +281,25 @@ function Services({ t }: { t: Dict }) {
                   <ArrowUpRight size={16} />
                 </span>
               </div>
-              <div className="diag flex items-baseline justify-between gap-3 px-4 py-4 md:px-5 md:py-5">
-                <h3 className="text-[15px] font-semibold tracking-[-0.02em] md:text-[17px]">{s.title}</h3>
-                <span className="text-[11px] text-ink/45 tabular-nums">{String(i + 1).padStart(2, "0")}</span>
+              <div className="diag flex flex-col gap-2 px-4 py-4 md:flex-row md:items-baseline md:justify-between md:gap-3 md:px-5 md:py-5">
+                <h3 className="text-[15px] leading-snug font-semibold tracking-[-0.02em] md:text-[17px]">{s.title}</h3>
+                <span className="text-[13px] whitespace-nowrap text-ink/60 tabular-nums">
+                  {t.priceList.from} <span className="font-semibold text-ink">{priceOf(s.key)} €</span>
+                </span>
               </div>
             </a>
           </li>
         ))}
-        <li data-reveal style={delay(270)}>
-          <div className="on-dark flex h-full min-h-[240px] flex-col justify-between gap-6 rounded-[20px] bg-ink p-5 text-white md:p-7">
-            <div>
+        <li className="col-span-2" data-reveal style={delay(180)}>
+          <div className="on-dark relative isolate flex h-full min-h-[240px] flex-col justify-between gap-6 overflow-hidden rounded-[20px] bg-ink p-5 text-white md:p-7">
+            <Image
+              src={images.helpCard}
+              alt=""
+              fill
+              sizes="(min-width: 1024px) 25vw, 50vw"
+              className="mono -z-10 hidden object-cover opacity-70 [mask-image:linear-gradient(to_right,transparent_35%,black_80%)] sm:block"
+            />
+            <div className="max-w-xs">
               <h3 className="text-[22px] leading-tight font-semibold tracking-[-0.03em] md:text-[26px]">
                 {t.services.helpTitle}
               </h3>
@@ -436,65 +462,79 @@ function BeforeAfterSection({ t }: { t: Dict }) {
   );
 }
 
-/* 9. Packages */
+/* 9. Price list */
 
-function Packages({ t }: { t: Dict }) {
-  const p = t.packages;
+function PriceList({ t }: { t: Dict }) {
+  const p = t.priceList;
   return (
     <section id="prices" className="wrap mt-24 md:mt-32">
       <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end" data-reveal>
         <div>
           <Kicker>{p.label}</Kicker>
-          <h2 className="heading mt-6 text-[clamp(40px,5.2vw,80px)] uppercase">
-            <TwoTone parts={p.title} />
+          <h2 className="heading mt-6 text-[clamp(44px,6vw,96px)]">
+            <span className="text-steel">/</span> {p.title}
           </h2>
         </div>
-        <p className="max-w-sm text-[14px] leading-relaxed text-ink/65">{p.note}</p>
+        <p className="max-w-sm text-[16px] leading-relaxed text-ink/60 md:text-right">{p.sub}</p>
       </div>
 
-      <ul className="mt-12 grid gap-3 lg:grid-cols-3 lg:py-4">
-        {p.items.map((item, i) => {
-          const dark = i === 1;
-          return (
-            <li
-              key={item.name}
-              data-reveal
-              style={delay(i * 100)}
-              className={`flex flex-col rounded-[28px] p-7 sm:p-9 ${
-                dark ? "on-dark bg-ink text-white shadow-[0_40px_80px_-40px_rgb(10_10_10/0.6)] lg:-my-4 lg:py-13" : "bg-white"
-              }`}
-            >
-              <div className="flex items-center justify-between gap-4">
-                <h3 className="text-[22px] font-semibold tracking-[-0.03em]">{item.name}</h3>
-                {dark && <span className="label rounded-full border border-white/25 px-3.5 py-2.5 text-[10px]">{p.popular}</span>}
-              </div>
-              <p className="mt-10">
-                <span className={`text-[14px] ${dark ? "text-white/60" : "text-ink/60"}`}>{p.from} </span>
-                <span className="text-[64px] leading-none font-semibold tracking-[-0.05em]">{item.price}</span>
-              </p>
-              <ul className={`mt-8 flex-1 border-t ${dark ? "border-white/12" : "border-ink/10"}`}>
-                {item.features.map((f) => (
-                  <li
-                    key={f}
-                    className={`flex items-center gap-3 border-b py-3.5 text-[15px] ${dark ? "border-white/12 text-white/85" : "border-ink/10 text-ink/80"}`}
-                  >
-                    <Check size={15} className="flex-none opacity-60" />
-                    {f}
-                  </li>
-                ))}
-              </ul>
-              <a
-                href={waLink(`${t.booking.service} ${item.name} (${p.from} ${item.price})`)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`pill mt-9 w-full ${dark ? "pill-light" : "pill-dark"}`}
-              >
-                {p.cta}
-              </a>
-            </li>
-          );
-        })}
-      </ul>
+      <div className="mt-10 rounded-[28px] bg-white p-2 sm:p-3" data-reveal style={delay(100)}>
+        <ul className="divide-y divide-ink/10">
+          {t.services.items.map((s) => {
+            const Icon = serviceIcons[services.find((x) => x.key === s.key)?.icon ?? "seat"];
+            return (
+              <li key={s.key}>
+                <a
+                  href={waLink(`${t.booking.service} ${s.title}`)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${s.title}, ${p.from} ${priceOf(s.key)} €. ${t.services.open}`}
+                  className="group flex items-center gap-4 rounded-[20px] px-3 py-5 transition-colors duration-300 hover:bg-mist/60 sm:gap-6 sm:px-6 sm:py-6"
+                >
+                  <span className="grid size-12 flex-none place-items-center rounded-[14px] border border-ink/10 bg-mist/60 transition-colors duration-300 group-hover:border-ink group-hover:bg-ink group-hover:text-white sm:size-14">
+                    <Icon size={22} />
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-[16px] leading-snug font-semibold tracking-[-0.02em] sm:text-[19px]">{s.title}</span>
+                    <span className="mt-1 block text-[13px] leading-snug text-ink/60 sm:text-[14px]">{s.desc}</span>
+                  </span>
+                  <span className="flex flex-col items-end whitespace-nowrap sm:flex-row sm:items-baseline sm:gap-2">
+                    <span className="text-[12px] text-ink/55 sm:text-[14px]">{p.from}</span>
+                    <span className="text-[26px] leading-none font-semibold tracking-[-0.04em] tabular-nums sm:text-[40px]">
+                      {priceOf(s.key)} €
+                    </span>
+                  </span>
+                  <span className="round hidden size-11 group-hover:bg-ink group-hover:text-white md:inline-flex">
+                    <ArrowUpRight size={16} />
+                  </span>
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+
+      <div className="mt-3 flex items-start gap-4 rounded-[20px] border border-ink/10 bg-white/60 p-5 sm:items-center sm:p-6" data-reveal>
+        <span className="grid size-9 flex-none place-items-center rounded-full border border-ink">
+          <Info size={16} />
+        </span>
+        <p className="text-[14px] leading-relaxed text-ink/70 sm:text-[15px]">{p.info}</p>
+      </div>
+
+      <div
+        className="on-dark mt-3 flex flex-col gap-4 rounded-[20px] bg-ink px-6 py-5 text-white sm:flex-row sm:items-center sm:justify-center sm:gap-8"
+        data-reveal
+      >
+        <p className="flex items-center gap-3 text-[15px] text-white/80">
+          <Pin size={18} />
+          {t.hero.label}
+        </p>
+        <span aria-hidden className="hidden h-6 w-px bg-white/15 sm:block" />
+        <a href={`tel:+${site.phoneDigits}`} className="flex items-center gap-3 text-[15px] font-semibold hover:underline">
+          <Phone size={18} />
+          {site.phone}
+        </a>
+      </div>
     </section>
   );
 }
@@ -615,14 +655,14 @@ function Cta({ t, book }: { t: Dict; book: string }) {
 
 function Contact({ t }: { t: Dict }) {
   const c = t.contact;
-  const serviceOptions = [...t.services.items.map((s) => s.title), ...t.packages.items.map((p) => p.name)];
+  const serviceOptions = t.services.items.map((s) => s.title);
   const items = [
     { icon: Phone, label: c.phone, value: site.phone, href: `tel:+${site.phoneDigits}` },
     { icon: WhatsApp, label: c.whatsapp, value: site.phone, href: waLink(t.booking.general), external: true },
     { icon: Mail, label: c.email, value: site.email, href: `mailto:${site.email}` },
     { icon: Instagram, label: c.instagram, value: site.instagram, href: site.instagramUrl, external: true },
     { icon: Clock, label: c.hours, value: site.hours },
-    { icon: Pin, label: c.address, value: `${site.address}, ${site.city}` },
+    { icon: Pin, label: c.address, value: t.hero.label },
   ];
 
   return (
@@ -684,11 +724,9 @@ function Footer({ t, lang }: { t: Dict; lang: Locale }) {
       <div className="on-dark rounded-[28px] bg-ink px-6 pt-14 pb-6 text-white sm:px-10 lg:px-14">
         <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-12">
           <div className="lg:col-span-3">
-            <Logo name={site.name} light />
+            <Logo name={site.name} />
             <address className="mt-6 grid gap-1.5 text-[14px] leading-relaxed text-white/70 not-italic">
-              <span>
-                {site.address}, {site.city}
-              </span>
+              <span>{t.hero.label}</span>
               <a href={`tel:+${site.phoneDigits}`} className="hover:text-white">
                 {site.phone}
               </a>
@@ -777,12 +815,22 @@ function JsonLd({ lang }: { lang: Locale }) {
     openingHours: site.hours,
     address: {
       "@type": "PostalAddress",
-      streetAddress: site.address,
       addressLocality: site.city,
+      addressRegion: site.region,
       addressCountry: "EE",
     },
+    areaServed: ["Ahtme", "Kohtla-Järve", "Ida-Virumaa"],
     sameAs: [site.instagramUrl],
-    priceRange: "€€",
+    priceRange: "€",
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: dictionaries[lang].priceList.title,
+      itemListElement: dictionaries[lang].services.items.map((s) => ({
+        "@type": "Offer",
+        itemOffered: { "@type": "Service", name: s.title, description: s.desc },
+        priceSpecification: { "@type": "PriceSpecification", minPrice: priceOf(s.key), priceCurrency: "EUR" },
+      })),
+    },
   };
   return (
     <script

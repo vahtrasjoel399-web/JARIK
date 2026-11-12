@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import type { Locale } from "@/content/site";
+import { site, type Locale } from "@/content/site";
 import type { Dict } from "@/content/translations";
 import { ChevronDown, Close, Menu } from "./icons";
 
@@ -22,16 +22,19 @@ const LANGS: { code: Locale; label: string }[] = [
   { code: "en", label: "EN" },
 ];
 
-export function Logo({ name, light = false }: { name: string; light?: boolean }) {
+/** Text logo: "CleanDrive" with a short thick bar under the first part, tagline below. Uses currentColor. */
+export function Logo({ name }: { name: string }) {
+  const cut = name.slice(1).search(/[A-Z]/) + 1 || name.length;
   return (
-    <span className="flex items-center gap-2.5">
-      <span
-        aria-hidden
-        className={`grid size-7 place-items-center rounded-full ${light ? "bg-white" : "bg-ink"}`}
-      >
-        <span className={`size-2.5 rounded-full border ${light ? "border-ink" : "border-white"}`} />
+    <span className="flex flex-col leading-none">
+      <span className="text-[21px] font-extrabold tracking-[-0.05em]">
+        <span className="relative inline-block">
+          {name.slice(0, cut)}
+          <span aria-hidden className="absolute -bottom-[5px] left-[1px] h-[3px] w-[58%] bg-current" />
+        </span>
+        {name.slice(cut)}
       </span>
-      <span className="text-[15px] font-bold tracking-[-0.02em] uppercase">{name}</span>
+      <span className="mt-[10px] text-[8.5px] font-semibold tracking-[0.36em] uppercase opacity-60">{site.tagline}</span>
     </span>
   );
 }

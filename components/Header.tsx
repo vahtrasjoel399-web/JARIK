@@ -88,7 +88,7 @@ export default function Header({ lang, name, nav, services, bookHref, base = "" 
   return (
     <header className="fixed inset-x-0 top-0 z-50 px-2 pt-2 md:px-3 md:pt-3">
       <div
-        className={`mx-auto flex h-16 max-w-[1296px] items-center justify-between rounded-full pr-2 pl-5 transition-[background-color,box-shadow,backdrop-filter] duration-500 ease-(--ease-studio) md:h-[68px] md:pl-6 ${
+        className={`flex h-16 items-center justify-between rounded-full pr-2 pl-5 transition-[background-color,box-shadow,backdrop-filter] duration-500 ease-(--ease-studio) md:h-[68px] md:pl-6 ${
           scrolled || open
             ? "bg-white/75 shadow-[0_1px_0_rgb(10_10_10/0.06),0_12px_40px_-20px_rgb(10_10_10/0.25)] backdrop-blur-xl backdrop-saturate-150"
             : "bg-transparent"
@@ -159,7 +159,7 @@ export default function Header({ lang, name, nav, services, bookHref, base = "" 
       <div
         id="mobile-menu"
         hidden={!open}
-        className="mx-auto mt-2 max-w-[1296px] rounded-[28px] bg-white/90 p-3 shadow-[0_24px_60px_-24px_rgb(10_10_10/0.35)] backdrop-blur-xl lg:hidden"
+        className="mt-2 rounded-[28px] bg-white/90 p-3 shadow-[0_24px_60px_-24px_rgb(10_10_10/0.35)] backdrop-blur-xl lg:hidden"
       >
         <nav aria-label="Mobile">
           <ul>

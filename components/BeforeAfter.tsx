@@ -54,7 +54,7 @@ export default function BeforeAfter({ pairs, t }: Props) {
       <div className="on-dark rounded-[28px] bg-ink p-2 md:p-3">
         <div
           ref={frame}
-          className="relative aspect-[4/5] cursor-ew-resize touch-pan-y overflow-hidden rounded-[20px] select-none sm:aspect-[16/10] lg:aspect-[16/8]"
+          className="relative aspect-[4/5] cursor-ew-resize touch-pan-y overflow-hidden rounded-[20px] select-none sm:aspect-[16/10] lg:aspect-auto lg:h-[min(78vh,960px)]"
           onPointerDown={(e) => {
             dragging.current = true;
             (e.target as HTMLElement).setPointerCapture?.(e.pointerId);
@@ -70,7 +70,7 @@ export default function BeforeAfter({ pairs, t }: Props) {
             src={pair.after}
             alt={`${t.after}: ${ex.after}`}
             fill
-            sizes="(min-width: 1320px) 1296px, 100vw"
+            sizes="100vw"
             className="mono pointer-events-none object-cover"
             draggable={false}
           />
@@ -85,7 +85,7 @@ export default function BeforeAfter({ pairs, t }: Props) {
               src={pair.before}
               alt={`${t.before}: ${ex.before}`}
               fill
-              sizes="(min-width: 1320px) 1296px, 100vw"
+              sizes="100vw"
               className={`object-cover ${pair.fakeBefore ? "fake-before" : "mono"}`}
               draggable={false}
             />

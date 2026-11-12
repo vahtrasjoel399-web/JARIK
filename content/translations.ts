@@ -46,8 +46,6 @@ const et = {
     word2: "STUUDIO",
     left: "Salongi hooldus sinu autole",
     right: "Käsitsi tehtud",
-    basic: { title: "PÕHIPUHASTUS", from: "alates", price: "30 €", items: "tolmuimemine · matid · plastikud" },
-    full: { title: "KEEMILINE PUHASTUS", from: "alates", price: "130 €", items: "istmed · vaibad · põrand · polster" },
   },
   services: {
     label: "Meie teenused",
@@ -280,8 +278,6 @@ const ru: Dict = {
     word2: "СТУДИЯ",
     left: "Уход за салоном вашего автомобиля",
     right: "Ручная работа",
-    basic: { title: "БАЗОВАЯ УБОРКА", from: "от", price: "30 €", items: "пылесос · коврики · пластик" },
-    full: { title: "ПОЛНАЯ ХИМЧИСТКА", from: "от", price: "130 €", items: "сиденья · ковры · пол · обивка" },
   },
   services: {
     label: "Наши услуги",
@@ -511,8 +507,6 @@ const en: Dict = {
     word2: "STUDIO",
     left: "Interior care for your car",
     right: "Hand finished",
-    basic: { title: "BASIC CLEAN", from: "from", price: "30 €", items: "vacuum · mats · plastics" },
-    full: { title: "FULL DRY CLEANING", from: "from", price: "130 €", items: "seats · carpets · floor · upholstery" },
   },
   services: {
     label: "Our services",

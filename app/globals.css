@@ -6,7 +6,7 @@
               Grey page, white cards. Contrast is the only accent.
   Type:       Inter Tight (Latin, Latin Extended for õ ä ö ü š ž, Cyrillic). Huge display in 800 italic,
               tight tracking; small uppercase labels with wide tracking.
-  Grid:       max 1320px, 8px spacing scale, radius 28px sections / 20px cards / pill buttons.
+  Grid:       full width with 8–12px gutters, 8px spacing scale, radius 28px sections / 20px cards / pill buttons.
   Signature:  giant bold italic "DETAILING" with a car sitting between the two lines.
 */
 
@@ -59,7 +59,7 @@
 @layer components {
   .wrap {
     width: 100%;
-    max-width: 1320px;
+    /* Full width on every screen; only a small gutter around the rounded cards */
     margin-inline: auto;
     padding-inline: 8px;
   }
@@ -197,7 +197,7 @@
 
 /* Cyrillic letters run wider: scale the giant words down a little */
 html[lang="ru"] .type-words {
-  font-size: clamp(48px, 14.2vw, 200px);
+  font-size: clamp(48px, 14.2vw, 320px);
 }
 
 @keyframes fade {

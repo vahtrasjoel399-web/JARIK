@@ -16,7 +16,7 @@ export default function Reviews({ t, photo, photoAlt }: Props) {
   return (
     <div className="grid overflow-hidden rounded-[28px] bg-white md:grid-cols-12">
       <div className="flex flex-col p-6 sm:p-10 md:col-span-7 lg:p-14">
-        <h2 className="heading text-[clamp(36px,5.4vw,76px)] uppercase">{t.label}</h2>
+        <h2 className="heading text-[clamp(36px,5.4vw,104px)] uppercase">{t.label}</h2>
 
         <figure className="mt-10 flex-1 md:mt-14" aria-live="polite">
           <blockquote key={i} className="animate-[fade_700ms_var(--ease-studio)] text-[clamp(20px,2.2vw,30px)] leading-[1.3] font-medium tracking-[-0.02em]">

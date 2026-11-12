@@ -69,11 +69,11 @@ export default async function Page({ params }: PageProps<"/[lang]">) {
         <Shine t={t} book={book} />
         <Alternating t={t} />
         <BeforeAfterSection t={t} />
-        <PriceList t={t} />
         <Bento t={t} />
         <section aria-label={t.reviews.label} className="wrap mt-24 md:mt-32" data-reveal>
           <Reviews t={t.reviews} photo={images.review} photoAlt={t.alt.review} />
         </section>
+        <PriceList t={t} />
         <Cta t={t} book={book} />
         <Contact t={t} />
       </main>
@@ -127,7 +127,7 @@ function Hero({ t, book }: { t: Dict; book: string }) {
               {t.hero.label}
             </p>
             <h1
-              className="heading mt-6 max-w-[11ch] text-[clamp(46px,6.2vw,96px)]"
+              className="heading mt-6 max-w-[11ch] text-[clamp(46px,6.2vw,132px)]"
               data-reveal
               style={delay(80)}
             >
@@ -208,7 +208,7 @@ function TypeBlock({ t }: { t: Dict }) {
 
         <div
           aria-hidden
-          className="type-words relative mx-auto mt-6 text-center text-[clamp(56px,16.4vw,228px)] select-none lg:mt-2"
+          className="type-words relative mx-auto mt-6 text-center text-[clamp(56px,16.4vw,360px)] select-none lg:mt-2"
         >
           <div className="display relative z-0 text-ink" data-reveal>
             {p.word1}
@@ -226,23 +226,9 @@ function TypeBlock({ t }: { t: Dict }) {
               className="object-cover mix-blend-multiply [filter:grayscale(1)_contrast(1.35)_brightness(1.18)] [mask-image:radial-gradient(ellipse_50%_48%_at_50%_54%,black_50%,transparent_100%)]"
             />
           </div>
-          <div className="display relative z-0 pb-[0.06em] text-mist">{p.word2}</div>
+          <div className="display relative z-0 pb-[0.12em] text-mist">{p.word2}</div>
         </div>
 
-        <div className="mt-8 grid divide-y divide-ink/10 border-t border-ink/10 md:grid-cols-2 md:divide-x md:divide-y-0">
-          {[p.basic, p.full].map((x) => (
-            <div key={x.title} className="flex flex-wrap items-end justify-between gap-4 px-6 py-7 sm:px-10 lg:px-14">
-              <div>
-                <p className="label">{x.title}</p>
-                <p className="mt-3 text-[14px] text-ink/60">{x.items}</p>
-              </div>
-              <p className="whitespace-nowrap">
-                <span className="text-[13px] text-ink/60">{x.from} </span>
-                <span className="text-[40px] leading-none font-semibold tracking-[-0.04em]">{x.price}</span>
-              </p>
-            </div>
-          ))}
-        </div>
       </div>
     </section>
   );
@@ -281,11 +267,9 @@ function Services({ t }: { t: Dict }) {
                   <ArrowUpRight size={16} />
                 </span>
               </div>
-              <div className="diag flex flex-col gap-2 px-4 py-4 md:flex-row md:items-baseline md:justify-between md:gap-3 md:px-5 md:py-5">
+              <div className="diag px-4 py-4 md:px-5 md:py-5">
                 <h3 className="text-[15px] leading-snug font-semibold tracking-[-0.02em] md:text-[17px]">{s.title}</h3>
-                <span className="text-[13px] whitespace-nowrap text-ink/60 tabular-nums">
-                  {t.priceList.from} <span className="font-semibold text-ink">{priceOf(s.key)} €</span>
-                </span>
+                <p className="mt-1.5 text-[13px] leading-snug text-ink/60">{s.desc}</p>
               </div>
             </a>
           </li>
@@ -358,7 +342,7 @@ function Shine({ t, book }: { t: Dict; book: string }) {
     <section id="about" className="wrap mt-24 md:mt-32">
       <div className="relative isolate overflow-hidden rounded-[28px] bg-[radial-gradient(130%_110%_at_0%_0%,#ffffff_0%,#e9e9e9_62%)] px-6 pt-12 ring-1 ring-white sm:px-10 lg:min-h-[660px] lg:px-14 lg:pt-16">
         <div className="relative z-10 lg:max-w-[46%]">
-          <h2 className="display text-[clamp(72px,10.5vw,168px)] uppercase" data-reveal>
+          <h2 className="display text-[clamp(72px,10.5vw,240px)] uppercase" data-reveal>
             <span className="block">{t.shine.title[0]}</span>
             <span className="block text-steel">{t.shine.title[1]}</span>
           </h2>
@@ -407,7 +391,7 @@ function Alternating({ t }: { t: Dict }) {
       <div className="grid gap-3 lg:grid-cols-2">
         <div className="flex flex-col justify-center rounded-[28px] bg-white p-6 sm:p-10 lg:p-14" data-reveal>
           <Kicker>{t.revive.kicker}</Kicker>
-          <h2 className="heading mt-7 text-[clamp(40px,5.2vw,80px)] uppercase">
+          <h2 className="heading mt-7 text-[clamp(40px,5.2vw,112px)] uppercase">
             <TwoTone parts={t.revive.title} br />
           </h2>
           <p className="mt-6 max-w-md text-[17px] leading-relaxed text-ink/70">{t.revive.text}</p>
@@ -423,7 +407,7 @@ function Alternating({ t }: { t: Dict }) {
         </div>
         <div className="flex flex-col justify-center rounded-[28px] bg-white p-6 sm:p-10 lg:p-14" data-reveal style={delay(120)}>
           <Kicker>{t.deep.kicker}</Kicker>
-          <h2 className="heading mt-7 text-[clamp(40px,5.2vw,80px)] uppercase">
+          <h2 className="heading mt-7 text-[clamp(40px,5.2vw,112px)] uppercase">
             <TwoTone parts={t.deep.title} br />
           </h2>
           <p className="mt-6 max-w-md text-[17px] leading-relaxed text-ink/70">{t.deep.text}</p>
@@ -449,7 +433,7 @@ function BeforeAfterSection({ t }: { t: Dict }) {
   return (
     <section id="before-after" className="wrap mt-24 md:mt-32">
       <div className="mb-8 grid items-end gap-6 md:grid-cols-[1fr_auto_1fr]" data-reveal>
-        <h2 className="heading text-[clamp(44px,6vw,96px)]">{t.ba.title}</h2>
+        <h2 className="heading text-[clamp(44px,6vw,132px)]">{t.ba.title}</h2>
         <span className="round hidden size-14 place-self-center md:inline-flex">
           <Sliders size={20} />
         </span>
@@ -471,7 +455,7 @@ function PriceList({ t }: { t: Dict }) {
       <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end" data-reveal>
         <div>
           <Kicker>{p.label}</Kicker>
-          <h2 className="heading mt-6 text-[clamp(44px,6vw,96px)]">
+          <h2 className="heading mt-6 text-[clamp(44px,6vw,132px)]">
             <span className="text-steel">/</span> {p.title}
           </h2>
         </div>
@@ -546,7 +530,7 @@ function Bento({ t }: { t: Dict }) {
   return (
     <section aria-labelledby="bento-h" className="wrap mt-24 md:mt-32">
       <div className="mx-auto max-w-4xl text-center" data-reveal>
-        <h2 id="bento-h" className="heading text-[clamp(36px,5.2vw,80px)] uppercase">
+        <h2 id="bento-h" className="heading text-[clamp(36px,5.2vw,112px)] uppercase">
           <TwoTone parts={b.title} />
         </h2>
         <p className="mx-auto mt-5 max-w-lg text-[16px] leading-relaxed text-ink/60">{b.sub}</p>
@@ -560,7 +544,7 @@ function Bento({ t }: { t: Dict }) {
           <Image src={images.bentoTall} alt={t.alt.bentoTall} fill sizes="(min-width: 1024px) 40vw, 100vw" className="mono zoom -z-20 object-cover opacity-80" />
           {/* Dark fade so the text stays readable over the photo */}
           <div aria-hidden className="absolute inset-0 -z-10 bg-linear-to-t from-ink via-ink/50 to-transparent" />
-          <h3 className="heading text-[clamp(36px,4vw,56px)]">{b.tallTitle}</h3>
+          <h3 className="heading text-[clamp(36px,4vw,72px)]">{b.tallTitle}</h3>
           <p className="mt-3 max-w-xs text-[15px] text-white/70">{b.tallText}</p>
           <a href="#services" className="pill pill-light mt-7 self-start">
             {b.tallCta}
@@ -621,7 +605,7 @@ function Cta({ t, book }: { t: Dict; book: string }) {
         </svg>
 
         <div className="px-6 pt-24 text-center sm:pt-32">
-          <h2 id="cta-h" className="heading mx-auto max-w-[13ch] text-[clamp(40px,6.4vw,100px)]" data-reveal>
+          <h2 id="cta-h" className="heading mx-auto max-w-[13ch] text-[clamp(40px,6.4vw,136px)]" data-reveal>
             {t.cta.title}
           </h2>
           <div className="mt-10 flex flex-wrap justify-center gap-3" data-reveal style={delay(120)}>
@@ -634,12 +618,12 @@ function Cta({ t, book }: { t: Dict; book: string }) {
           </div>
         </div>
 
-        <div className="relative mx-auto mt-4 aspect-[16/8] w-full max-w-[1100px] sm:aspect-[16/7]">
+        <div className="relative mx-auto mt-4 aspect-[16/8] w-full max-w-[1600px] sm:aspect-[16/7]">
           <Image
             src={images.ctaCar}
             alt={t.alt.cta}
             fill
-            sizes="(min-width: 1100px) 1100px, 100vw"
+            sizes="(min-width: 1600px) 1600px, 100vw"
             className="mono object-cover [mask-composite:intersect] [mask-image:linear-gradient(to_bottom,transparent_0%,black_30%,black_80%,transparent_100%),linear-gradient(to_right,transparent_0%,black_18%,black_82%,transparent_100%)]"
           />
           {/* Soft white light streak */}
@@ -670,7 +654,7 @@ function Contact({ t }: { t: Dict }) {
       <div className="grid gap-3 lg:grid-cols-12">
         <div className="rounded-[28px] bg-white p-6 sm:p-10 lg:col-span-5 lg:p-12" data-reveal>
           <Kicker>{c.label}</Kicker>
-          <h2 className="heading mt-6 text-[clamp(40px,4.6vw,72px)] uppercase">
+          <h2 className="heading mt-6 text-[clamp(40px,4.6vw,100px)] uppercase">
             <TwoTone parts={c.title} br />
           </h2>
           <p className="mt-5 mb-8 max-w-md text-[15px] leading-relaxed text-ink/70">{c.text}</p>
